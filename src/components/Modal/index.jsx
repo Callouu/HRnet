@@ -68,8 +68,8 @@ export default function Modal({
             onClick={onClose}
             style={{
               position: "absolute",
-              top: "10px",
-              right: "15px",
+              top: "0px",
+              right: "0px",
               fontSize: "1.5rem",
               border: "none",
               background: "transparent",
