@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Modal from "../../components/Modal";
 
 function Home() {
@@ -11,13 +11,16 @@ function Home() {
     <main>
       <header>
         <h1>HRnet</h1>
-        <button
+        <Link className="redirect" to="/employee-list">
+          <p>View current employee</p>
+        </Link>
+        {/* <button
           className="button"
           onClick={() => navigate("/employee-list")}
           aria-label="Navigate to employee list page"
         >
-          Employee List
-        </button>
+          View current employees
+        </button> */}
         <button onClick={() => setOpen(true)}>Ouvrir la modale</button>
         <Modal
           isOpen={open}
@@ -26,7 +29,7 @@ function Home() {
           size="md"
           closeOnOverlayClick={true}
         ></Modal>
-        <input type="search" placeholder="Search..." />
+        <form></form>
       </header>
     </main>
   );
