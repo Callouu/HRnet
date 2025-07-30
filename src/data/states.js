@@ -238,5 +238,3 @@ const states = [
 ];
 
 export default states;
-
-export const departments = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"];
