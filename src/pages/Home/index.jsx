@@ -1,37 +1,37 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Modal from "../../components/Modal";
+import Form from "../../components/Form";
 
 function Home() {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  const handleFormSubmit = () => {
+    setOpen(true);
+  };
+
   return (
-    <main>
+    <>
       <header>
         <h1>HRnet</h1>
         <Link className="redirect" to="/employee-list">
           <p>View current employee</p>
         </Link>
-        {/* <button
-          className="button"
-          onClick={() => navigate("/employee-list")}
-          aria-label="Navigate to employee list page"
-        >
-          View current employees
-        </button> */}
-        <button onClick={() => setOpen(true)}>Ouvrir la modale</button>
+      </header>
+      <main className="main_wrapper">
+        <h2>Create Employee</h2>
+        <Form onSubmitSuccess={handleFormSubmit} />
         <Modal
           isOpen={open}
           onClose={() => setOpen(false)}
           title="Employee created !"
           size="md"
           closeOnOverlayClick={true}
-        ></Modal>
-        <form></form>
-      </header>
-    </main>
+        >
+          <p>Employee has been successfully created!</p>
+        </Modal>
+      </main>
+    </>
   );
 }
 
