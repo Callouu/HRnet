@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../../store/employeeSlice";
 import Dropdown from "../Dropdown";
+import DatePicker from "../Datepicker";
 import states from "../../data/states";
 import departments from "../../data/departments";
 import "./style.scss";
@@ -77,30 +78,22 @@ function Form({ onSubmitSuccess }) {
         />
       </div>
       <div className="form__section">
-      <label className="form__section__label">Date of Birth:</label>
-      <input
-        className="form__section__input"
-        type="date"
-        name="dateOfBirth"
-        value={formData.dateOfBirth}
-        onChange={handleChange}
-        required
-      />
+        <label className="form__section__label">Date of Birth:</label>
+        <DatePicker
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleChange}
+        />
       </div>
       <div className="form__section">
-      <label className="form__section__label">Start Date:</label>
-      <input
-        className="form__section__input"
-        type="date"
-        name="startDate"
-        value={formData.startDate}
-        onChange={handleChange}
-        required
-      />
+        <label className="form__section__label">Start Date:</label>
+        <DatePicker
+          name="startDate"
+          value={formData.startDate}
+          onChange={handleChange}
+        />
       </div>
-      {/* <fieldset> */}
-        {/* <legend>Address</legend> */}
-        <div className="form__section">
+      <div className="form__section">
         <label className="form__section__label">Street:</label>
         <input
           className="form__section__input"
@@ -110,21 +103,19 @@ function Form({ onSubmitSuccess }) {
           onChange={handleChange}
           required
         />
-        </div>
-        <div className="form__section">
-        <label className="form__section__label">
-          City:
-                  </label>
-          <input
-            className="form__section__input"
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form__section">
+      </div>
+      <div className="form__section">
+        <label className="form__section__label">City:</label>
+        <input
+          className="form__section__input"
+          type="text"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="form__section">
         <label className="form__section__label">State:</label>
         <Dropdown
           name="state"
@@ -135,32 +126,32 @@ function Form({ onSubmitSuccess }) {
           value={formData.state.abbreviation}
           onChange={handleChange}
         />
-        </div>
-        <div className="form__section">
+      </div>
+      <div className="form__section">
         <label className="form__section__label">Zip Code:</label>
         <input
+          className="form__section__input"
           type="number"
           name="zipCode"
           value={formData.zipCode}
           onChange={handleChange}
           required
         />
-        </div>
-      {/* </fieldset> */}
+      </div>
       <div className="form__section">
-      <label className="form__section__label">Department:</label>
-      <Dropdown
-        name="department"
-        options={departments.map((s) => ({
+        <label className="form__section__label">Department:</label>
+        <Dropdown
+          name="department"
+          options={departments.map((s) => ({
             label: s.name,
             value: s.name,
           }))}
-        value={formData.department}
-        onChange={handleChange}
-      />
+          value={formData.department}
+          onChange={handleChange}
+        />
       </div>
       <div className="form__section">
-      <button type="submit">Save</button>
+        <button type="submit">Save</button>
       </div>
     </form>
   );
