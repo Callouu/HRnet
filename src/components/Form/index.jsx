@@ -151,7 +151,9 @@ function Form({ onSubmitSuccess }) {
         />
       </div>
       <div className="form__section">
-        <button type="submit">Save</button>
+        <div className="form__section__button">
+        <button type="submit">Create</button>
+        </div>
       </div>
     </form>
   );
