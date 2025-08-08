@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Modal from "../../components/Modal";
 import Form from "../../components/Form";
+import { Modal } from 'react-modal-ab';
 import "./style.scss";
 
 function Home() {
@@ -13,14 +13,14 @@ function Home() {
 
   return (
     <>
-      <main className="home-wrapper">
-        <div className="home-title">
+      <main className="home_wrapper">
+        <div className="home_wrapper--title">
           <h1>HRnet</h1>
         </div>
         <Link className="redirect" to="/employee-list">
           <p>View current employee</p>
         </Link>
-        <h2>Create Employee</h2>
+        <h2 className="home_wrapper--subtitle">Create Employee</h2>
         <Form onSubmitSuccess={handleFormSubmit} />
         <Modal
           isOpen={open}
@@ -29,7 +29,6 @@ function Home() {
           size="md"
           closeOnOverlayClick={true}
         >
-          <p>Employee has been successfully created!</p>
         </Modal>
       </main>
     </>
