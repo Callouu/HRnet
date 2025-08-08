@@ -1,19 +1,25 @@
-.home-wrapper {
+.home_wrapper {
   max-width: 700px;
   margin: 3rem auto;
   padding: 2rem 2.5rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   border-radius: 18px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.18);
-}
 
-.home-title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #7f53ac;
-  margin-bottom: 2rem;
+  &--title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #7f53ac;
+    margin-bottom: 1rem;
+  }
+
+  &--subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7f53ac;
+    margin-top: 1rem;
+  }
 }

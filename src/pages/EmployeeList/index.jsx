@@ -1,10 +1,14 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DataTable from "react-data-table-component";
+import "./style.scss";
+import { Direction } from "react-data-table-component";
 
 function EmployeeList() {
   const employees = useSelector((state) => state.employees.employees);
+  const [search, setSearch] = useState("");
 
   // Date formatting function
   const formatDate = (dateStr) => {
@@ -36,20 +40,41 @@ function EmployeeList() {
     { name: "Zip Code", selector: (row) => row.zipCode },
   ];
 
+    // Employee filtering for search input
+    const filteredEmployees = employees.filter((employee) =>
+    Object.values(employee)
+      .join(" ")
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <main>
-      <h1>Employee List</h1>
-      <DataTable
-        columns={columns}
-        data={employees}
-        pagination
-        highlightOnHover
-        striped
-      />
-      <Link className="redirect" to="/">
-        <p>Home</p>
-      </Link>
-    </main>
+    <>
+      <main className="employee_wrapper">
+        <h1 className="employee_wrapper--title">Employee List</h1>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="employee_wrapper--input"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <DataTable
+          columns={columns}
+          data={filteredEmployees}
+          direction={Direction.AUTO}
+          pagination
+          responsive = {true}
+          wrap = {true}
+          compact = {true}
+          highlightOnHover
+          striped
+        />
+        <Link className="redirect" to="/">
+          <p>Home</p>
+        </Link>
+      </main>
+    </>
   );
 }
 
