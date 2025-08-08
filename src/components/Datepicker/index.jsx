@@ -65,6 +65,11 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
   // Liste des années pour le select (1970 à 2070)
   const years = Array.from({ length: 101 }, (_, i) => 1970 + i);
 
+  const months = [
+  "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+];
+
   return (
     <div className="custom-datepicker" ref={ref}>
       {/* Bouton d'ouverture du calendrier */}
@@ -85,8 +90,20 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
             {/* Mois précédent */}
             <button type="button" onClick={handlePrev}>&lt;</button>
             <span>
+              {/* Dropdown pour le mois */}
+            <select
+              className="custom-datepicker__month-select"
+              value={month}
+              onChange={e =>
+                setCurrentDate(new Date(year, Number(e.target.value), 1))
+              }
+            >
+              {months.map((m, idx) => (
+                <option key={m} value={idx}>{m}</option>
+              ))}
+            </select>
               {/* Affichage du mois et select de l'année */}
-              {currentDate.toLocaleString("fr-FR", { month: "long" })}
+              {/* {currentDate.toLocaleString("fr-FR", { month: "long" })} */}
               <select
                 className="custom-datepicker__year-select"
                 value={year}
