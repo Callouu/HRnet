@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../../components/Modal";
 import Form from "../../components/Form";
+import "./style.scss";
 
 function Home() {
   const [open, setOpen] = useState(false);
@@ -12,13 +13,13 @@ function Home() {
 
   return (
     <>
-      <header>
-        <h1>HRnet</h1>
+      <main className="home-wrapper">
+        <div className="home-title">
+          <h1>HRnet</h1>
+        </div>
         <Link className="redirect" to="/employee-list">
           <p>View current employee</p>
         </Link>
-      </header>
-      <main className="main_wrapper">
         <h2>Create Employee</h2>
         <Form onSubmitSuccess={handleFormSubmit} />
         <Modal
