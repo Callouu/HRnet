@@ -30,7 +30,7 @@ function Dropdown({
     <div className="dropdown" ref={ref}>
       <button
         type="button"
-        className="ropdown__toggle"
+        className="dropdown__toggle"
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
