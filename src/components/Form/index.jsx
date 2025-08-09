@@ -9,15 +9,15 @@ import "./style.scss";
 
 /**
  * Form component for creating a new employee.
- * 
+ *
  * @param {function} onSubmitSuccess - Callback called after successful form submission.
- * 
+ *
  * - Handles all form fields and their state.
  * - Validates inputs using regex rules and required checks.
  * - Displays error messages and red borders for invalid fields.
  * - Prevents submission if the form is invalid.
  * - Uses custom Dropdown and DatePicker components.
- * 
+ *
  * @category Components
  * @component
  * @returns {React.Component} A React component of a form.
@@ -155,33 +155,57 @@ function Form({ onSubmitSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="form">
       <div className="form__section">
-        <label className="form__section__label">First Name:*</label>
+        <label className="form__section__label" htmlFor="firstName">
+          First Name:*
+        </label>
         <input
+          id="firstName"
           className="form__section__input"
           type="text"
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
-          aria-invalid={
-            filled.firstName && errors.firstName ? "true" : "false"
+          aria-invalid={filled.firstName && errors.firstName ? "true" : "false"}
+          aria-describedby={
+            filled.firstName && errors.firstName ? "firstName-error" : undefined
           }
         />
         {filled.firstName && errors.firstName && (
-          <span className="form__error">First name is required</span>
+          <span
+            id="firstName-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            First name is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Last Name:*</label>
+        <label className="form__section__label" htmlFor="lastName">
+          Last Name:*
+        </label>
         <input
+          id="lastName"
           className="form__section__input"
           type="text"
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
           aria-invalid={filled.lastName && errors.lastName ? "true" : "false"}
+          aria-describedby={
+            filled.lastName && errors.lastName ? "lastName-error" : undefined
+          }
         />
         {filled.lastName && errors.lastName && (
-          <span className="form__error">last name is required</span>
+          <span
+            id="lastName-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            last name is required
+          </span>
         )}
       </div>
       <div className="form__section">
@@ -193,54 +217,107 @@ function Form({ onSubmitSuccess }) {
           ariaInvalid={
             filled.dateOfBirth && errors.dateOfBirth ? "true" : "false"
           }
+          ariaDescribedby={
+            filled.dateOfBirth && errors.dateOfBirth
+              ? "dateOfBirth-error"
+              : undefined
+          }
         />
         {filled.dateOfBirth && errors.dateOfBirth && (
-          <span className="form__error">Date of birth is required</span>
+          <span
+            id="dateOfBirth-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            Date of birth is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Start Date:*</label>
+        <label className="form__section__label" htmlFor="startDate">
+          Start Date:*
+        </label>
         <DatePicker
           name="startDate"
           value={formData.startDate}
           onChange={handleChange}
           ariaInvalid={filled.startDate && errors.startDate ? "true" : "false"}
+          ariaDescribedby={
+            filled.startDate && errors.startDate ? "startDate-error" : undefined
+          }
         />
         {filled.startDate && errors.startDate && (
-          <span className="form__error">Start date is required</span>
+          <span
+            id="startDate-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            Start date is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Street:*</label>
+        <label className="form__section__label" htmlFor="street">
+          Street:*
+        </label>
         <input
+          id="street"
           className="form__section__input"
           type="text"
           name="street"
           value={formData.street}
           onChange={handleChange}
           aria-invalid={filled.street && errors.street ? "true" : "false"}
+          aria-describedby={
+            filled.street && errors.street ? "street-error" : undefined
+          }
         />
         {filled.street && errors.street && (
-          <span className="form__error">Street is required</span>
+          <span
+            id="street-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            Street is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">City:*</label>
+        <label className="form__section__label" htmlFor="city">
+          City:*
+        </label>
         <input
+          id="city"
           className="form__section__input"
           type="text"
           name="city"
           value={formData.city}
           onChange={handleChange}
           aria-invalid={filled.city && errors.city ? "true" : "false"}
+          aria-describedby={
+            filled.city && errors.city ? "city-error" : undefined
+          }
         />
         {filled.city && errors.city && (
-          <span className="form__error">City is required</span>
+          <span
+            id="city-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            City is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">State:*</label>
+        <label className="form__section__label" htmlFor="state">
+          State:*
+        </label>
         <Dropdown
+          id="state"
           name="state"
           options={states.map((s) => ({
             label: s.name,
@@ -249,28 +326,52 @@ function Form({ onSubmitSuccess }) {
           value={formData.state.abbreviation}
           onChange={handleChange}
           ariaInvalid={filled.state && errors.state ? "true" : "false"}
+          ariaDescribedby={
+            filled.state && errors.state ? "state-error" : undefined
+          }
         />
         {filled.state && errors.state && (
-          <span className="form__error">State is required</span>
+          <span
+            id="state-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            State is required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Zip Code:*</label>
+        <label className="form__section__label" htmlFor="zipCode">
+          Zip Code:*
+        </label>
         <input
+          id="zipCode"
           className="form__section__input"
           type="number"
           name="zipCode"
           value={formData.zipCode}
           onChange={handleChange}
           aria-invalid={filled.zipCode && errors.zipCode ? "true" : "false"}
+          aria-describedby={
+            filled.zipCode && errors.zipCode ? "zipCode-error" : undefined
+          }
         />
         {filled.zipCode && errors.zipCode && (
-          <span className="form__error">5-digit zip code required</span>
+          <span
+            id="zipCode-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            5-digit zip code required
+          </span>
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Department:*</label>
+        <label className="form__section__label" htmlFor="department">Department:*</label>
         <Dropdown
+          id="department"
           name="department"
           options={departments.map((s) => ({
             label: s.name,
@@ -281,9 +382,21 @@ function Form({ onSubmitSuccess }) {
           ariaInvalid={
             filled.department && errors.department ? "true" : "false"
           }
+          ariaDescribedby={
+            filled.department && errors.department
+              ? "department-error"
+              : undefined
+          }
         />
         {filled.department && errors.department && (
-          <span className="form__error">Department is required</span>
+          <span
+            id="department-error"
+            className="form__error"
+            role="alert"
+            aria-live="assertive"
+          >
+            Department is required
+          </span>
         )}
       </div>
       <div className="form__section">
