@@ -6,6 +6,18 @@ import DataTable from "react-data-table-component";
 import "./style.scss";
 import { Direction } from "react-data-table-component";
 
+/**
+ * EmployeeList page component for HRnet.
+ *
+ * - Displays a searchable and sortable table of all employees.
+ * - Formats date fields for display.
+ * - Allows filtering employees by any field using a search input.
+ * - Provides navigation back to the home page.
+ *
+ * @category Pages
+ * @component
+ * @returns { React.Component } A React component of the employee list.
+ */
 function EmployeeList() {
   const employees = useSelector((state) => state.employees.employees);
   const [search, setSearch] = useState("");
@@ -18,6 +30,7 @@ function EmployeeList() {
     return date.toLocaleDateString("fr-FR").slice(0, 8);
   };
 
+  // Columns definition for DataTable
   const columns = [
     { name: "First Name", selector: (row) => row.firstName, sortable: true },
     { name: "Last Name", selector: (row) => row.lastName, sortable: true },

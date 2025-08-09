@@ -1,6 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./style.scss";
 
+/**
+ * Dropdown component for custom select functionality.
+ *
+ * @param {string} name - Name of the field (for forms).
+ * @param {Array} options - Array of options (string or {label, value} objects).
+ * @param {string} value - Selected value.
+ * @param {function} onChange - Callback when an option is selected.
+ * @param {boolean} required - If true, marks the field as required.
+ * @param {string} ariaInvalid - "true" if the field is invalid (for accessibility).
+ * @param {string} [placeholder] - Placeholder text when no value is selected.
+ *
+ * - Displays a custom dropdown menu.
+ * - Handles outside click to close the menu.
+ * - Shows a dynamic arrow depending on open/closed state.
+ * - Supports accessibility attributes.
+ * 
+ * @category Components
+ * @component
+ * @returns {React.Component} A React component of a dropdown.
+ */
 function Dropdown({
   name,
   options,
@@ -13,7 +33,7 @@ function Dropdown({
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  // Ferme le menu si on clique en dehors
+  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {

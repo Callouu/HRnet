@@ -2,19 +2,28 @@ import React, { useState, useRef, useEffect } from "react";
 import "./style.scss";
 
 /**
- * DatePicker - Composant de sélection de date
+ * DatePicker component for custom date selection.
  *
- * Props :
- * @param {string} name - Nom du champ (pour le formulaire)
- * @param {string} value - Valeur ISO de la date sélectionnée (ex: "2025-08-06")
- * @param {function} onChange - Fonction appelée lors de la sélection d'une date
- * @param {string} [placeholder] - Texte affiché si aucune date sélectionnée
+ * @param {string} name - Name of the field (for forms).
+ * @param {string} value - Selected date in ISO format (e.g. "2025-08-06").
+ * @param {function} onChange - Callback when a date is selected.
+ * @param {boolean} required - If true, marks the field as required.
+ * @param {string} ariaInvalid - "true" if the field is invalid (for accessibility).
+ * @param {string} [placeholder] - Placeholder text when no date is selected.
+ *
+ * - Displays a custom calendar popup for date selection.
+ * - Allows month and year selection via dropdowns.
+ * - Handles outside click to close the calendar.
+ * 
+ * @category Components
+ * @component
+ * @returns {React.Component} A React component of a datepicker.
  */
 function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder = "Select a date" }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  // Ferme le calendrier si on clique en dehors du composant
+  // Close the calendar if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) setOpen(false);
@@ -23,19 +32,19 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Date affichée dans le calendrier
+  // Set the current date based on today's date
   const [currentDate, setCurrentDate] = useState(() =>
     value ? new Date(value) : new Date()
   );
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  // Calcul du nombre de jours dans le mois et du premier jour de la semaine
+  // Calculate the number of days in the current month
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
 
 
-  // Génère une date locale
+  // Format the date
   const localeDate = (date) =>
     date.getFullYear() +
     "-" +
@@ -43,18 +52,18 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
     "-" +
     String(date.getDate()).padStart(2, "0");
 
-  // Sélectionne un jour et ferme le calendrier
+  // Handle date selection
   const handleDate = (day) => {
     const selected = new Date(year, month, day);
     onChange({ target: { name, value: localeDate(selected) } });
     setOpen(false);
   };
 
-  // Navigation mois précédent/suivant
+  // Handle month navigation
   const handlePrev = () => setCurrentDate(new Date(year, month - 1, 1));
   const handleNext = () => setCurrentDate(new Date(year, month + 1, 1));
 
-  // Liste des années pour le select (1970 à 2070)
+  // Generate years from 1970 to 2070
   const years = Array.from({ length: 101 }, (_, i) => 1970 + i);
 
   const months = [
@@ -64,7 +73,7 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
 
   return (
     <div className="custom-datepicker" ref={ref}>
-      {/* Bouton d'ouverture du calendrier */}
+      {/* Open Calendar */}
       <button
         type="button"
         className="custom-datepicker__toggle"
@@ -77,14 +86,14 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
         </span>
         <span className="custom-datepicker__arrow">{open ? "▲" : "▼"}</span>
       </button>
-      {/* Calendrier déroulant */}
+      {/* Calendar Menu */}
       {open && (
         <div className="custom-datepicker__popup">
           <div className="custom-datepicker__header">
-            {/* Mois précédent */}
+            {/* Previous month */}
             <button type="button" onClick={handlePrev}>&lt;</button>
             <span>
-              {/* Dropdown pour le mois */}
+              {/* Month Dropdown */}
             <select
               className="custom-datepicker__month-select"
               value={month}
@@ -96,7 +105,7 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
                 <option key={m} value={idx}>{m}</option>
               ))}
             </select>
-              {/* Affichage du mois et select de l'année */}
+              {/* Select for the year */}
               <select
                 className="custom-datepicker__year-select"
                 value={year}
@@ -109,7 +118,7 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
                 ))}
               </select>
             </span>
-            {/* Mois suivant */}
+            {/* Next month */}
             <button type="button" onClick={handleNext}>&gt;</button>
           </div>
           <div className="custom-datepicker__calendar">
@@ -119,13 +128,11 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
                 <div key={d} className="custom-datepicker__weekday">{d}</div>
               ))}
             </div>
-            {/* Jours du mois */}
+            {/* Days for the current month */}
             <div className="custom-datepicker__days">
-              {/* Cases vides avant le premier jour du mois */}
               {[...Array(firstDay).keys()].map((_, i) => (
                 <div key={`empty-${i}`} className="custom-datepicker__day empty"></div>
               ))}
-              {/* Affichage des jours */}
               {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
                 const iso = localeDate(new Date(year, month, day));
                 return (

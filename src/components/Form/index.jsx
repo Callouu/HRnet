@@ -10,15 +10,17 @@ import "./style.scss";
 /**
  * Form component for creating a new employee.
  * 
- * Props:
  * @param {function} onSubmitSuccess - Callback called after successful form submission.
  * 
- * Features:
  * - Handles all form fields and their state.
  * - Validates inputs using regex rules and required checks.
  * - Displays error messages and red borders for invalid fields.
  * - Prevents submission if the form is invalid.
  * - Uses custom Dropdown and DatePicker components.
+ * 
+ * @category Components
+ * @component
+ * @returns {React.Component} A React component of a form.
  */
 function Form({ onSubmitSuccess }) {
   const dispatch = useDispatch();
