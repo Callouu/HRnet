@@ -56,3 +56,16 @@
     }
   }
 }
+
+.form__section__input[aria-invalid="true"] {
+  border-color: #dc3545;
+}
+
+.form__error {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  display: block;
+  font-style: italic;
+}

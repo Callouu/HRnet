@@ -7,8 +7,23 @@ import states from "../../data/states";
 import departments from "../../data/departments";
 import "./style.scss";
 
+/**
+ * Form component for creating a new employee.
+ * 
+ * Props:
+ * @param {function} onSubmitSuccess - Callback called after successful form submission.
+ * 
+ * Features:
+ * - Handles all form fields and their state.
+ * - Validates inputs using regex rules and required checks.
+ * - Displays error messages and red borders for invalid fields.
+ * - Prevents submission if the form is invalid.
+ * - Uses custom Dropdown and DatePicker components.
+ */
 function Form({ onSubmitSuccess }) {
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({});
+  const [filled, setfilled] = useState({});
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,8 +36,44 @@ function Form({ onSubmitSuccess }) {
     department: "",
   });
 
+  // Regex rules for validation
+  const regexRules = {
+    firstName: /^[A-Za-zÀ-ÿ' -]{2,30}$/,
+    lastName: /^[A-Za-zÀ-ÿ' -]{2,30}$/,
+    zipCode: /^\d{5}$/,
+    city: /^[A-Za-zÀ-ÿ' -]{2,40}$/,
+    street: /^.{2,60}$/,
+  };
+
+  // Validates a single field based on regex rules
+  const isValid = (name, value) => {
+    if (!regexRules[name]) return true;
+    return regexRules[name].test(value);
+  };
+
+  // Checks if the entire form is valid
+  const isFormValid = () => {
+    for (const key in regexRules) {
+      if (!isValid(key, formData[key])) return false;
+    }
+    if (
+      !formData.dateOfBirth ||
+      !formData.startDate ||
+      !formData.state.abbreviation ||
+      !formData.department
+    )
+      return false;
+    return true;
+  };
+
+  /**
+   * Handles input changes for all fields.
+   * Updates form data, marks field as filled, and sets error state.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setfilled((prev) => ({ ...prev, [name]: true }));
+
     if (name === "state") {
       const selected = states.find((s) => s.abbreviation === value);
       setFormData((prev) => ({
@@ -31,13 +82,59 @@ function Form({ onSubmitSuccess }) {
           ? { name: selected.name, abbreviation: selected.abbreviation }
           : { name: "", abbreviation: "" },
       }));
+      setErrors((prev) => ({
+        ...prev,
+        state: !value,
+      }));
+    } else if (name === "department") {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => ({
+        ...prev,
+        department: !value,
+      }));
+    } else if (name === "dateOfBirth" || name === "startDate") {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: !value,
+      }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: !isValid(name, value),
+      }));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Mark all fields as filled to show errors
+    setfilled({
+      firstName: true,
+      lastName: true,
+      dateOfBirth: true,
+      startDate: true,
+      street: true,
+      city: true,
+      state: true,
+      zipCode: true,
+      department: true,
+    });
+    // Set errors for all fields
+    setErrors({
+      firstName: !isValid("firstName", formData.firstName),
+      lastName: !isValid("lastName", formData.lastName),
+      dateOfBirth: !formData.dateOfBirth,
+      startDate: !formData.startDate,
+      street: !isValid("street", formData.street),
+      city: !isValid("city", formData.city),
+      state: !formData.state.abbreviation,
+      zipCode: !isValid("zipCode", formData.zipCode),
+      department: !formData.department,
+    });
+    // Empêche la soumission si le formulaire est invalide
+    if (!isFormValid()) return;
     dispatch(addEmployee(formData));
     setFormData({
       firstName: "",
@@ -56,67 +153,91 @@ function Form({ onSubmitSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="form">
       <div className="form__section">
-        <label className="form__section__label">First Name:</label>
+        <label className="form__section__label">First Name:*</label>
         <input
           className="form__section__input"
           type="text"
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
-          required
+          aria-invalid={
+            filled.firstName && errors.firstName ? "true" : "false"
+          }
         />
+        {filled.firstName && errors.firstName && (
+          <span className="form__error">First name is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Last Name:</label>
+        <label className="form__section__label">Last Name:*</label>
         <input
           className="form__section__input"
           type="text"
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
-          required
+          aria-invalid={filled.lastName && errors.lastName ? "true" : "false"}
         />
+        {filled.lastName && errors.lastName && (
+          <span className="form__error">last name is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Date of Birth:</label>
+        <label className="form__section__label">Date of Birth:*</label>
         <DatePicker
           name="dateOfBirth"
           value={formData.dateOfBirth}
           onChange={handleChange}
+          ariaInvalid={
+            filled.dateOfBirth && errors.dateOfBirth ? "true" : "false"
+          }
         />
+        {filled.dateOfBirth && errors.dateOfBirth && (
+          <span className="form__error">Date of birth is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Start Date:</label>
+        <label className="form__section__label">Start Date:*</label>
         <DatePicker
           name="startDate"
           value={formData.startDate}
           onChange={handleChange}
+          ariaInvalid={filled.startDate && errors.startDate ? "true" : "false"}
         />
+        {filled.startDate && errors.startDate && (
+          <span className="form__error">Start date is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Street:</label>
+        <label className="form__section__label">Street:*</label>
         <input
           className="form__section__input"
           type="text"
           name="street"
           value={formData.street}
           onChange={handleChange}
-          required
+          aria-invalid={filled.street && errors.street ? "true" : "false"}
         />
+        {filled.street && errors.street && (
+          <span className="form__error">Street is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">City:</label>
+        <label className="form__section__label">City:*</label>
         <input
           className="form__section__input"
           type="text"
           name="city"
           value={formData.city}
           onChange={handleChange}
-          required
+          aria-invalid={filled.city && errors.city ? "true" : "false"}
         />
+        {filled.city && errors.city && (
+          <span className="form__error">City is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">State:</label>
+        <label className="form__section__label">State:*</label>
         <Dropdown
           name="state"
           options={states.map((s) => ({
@@ -125,21 +246,28 @@ function Form({ onSubmitSuccess }) {
           }))}
           value={formData.state.abbreviation}
           onChange={handleChange}
+          ariaInvalid={filled.state && errors.state ? "true" : "false"}
         />
+        {filled.state && errors.state && (
+          <span className="form__error">State is required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Zip Code:</label>
+        <label className="form__section__label">Zip Code:*</label>
         <input
           className="form__section__input"
           type="number"
           name="zipCode"
           value={formData.zipCode}
           onChange={handleChange}
-          required
+          aria-invalid={filled.zipCode && errors.zipCode ? "true" : "false"}
         />
+        {filled.zipCode && errors.zipCode && (
+          <span className="form__error">5-digit zip code required</span>
+        )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Department:</label>
+        <label className="form__section__label">Department:*</label>
         <Dropdown
           name="department"
           options={departments.map((s) => ({
@@ -148,11 +276,17 @@ function Form({ onSubmitSuccess }) {
           }))}
           value={formData.department}
           onChange={handleChange}
+          ariaInvalid={
+            filled.department && errors.department ? "true" : "false"
+          }
         />
+        {filled.department && errors.department && (
+          <span className="form__error">Department is required</span>
+        )}
       </div>
       <div className="form__section">
         <div className="form__section__button">
-        <button type="submit">Create</button>
+          <button type="submit">Create</button>
         </div>
       </div>
     </form>
