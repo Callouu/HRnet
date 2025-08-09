@@ -6,6 +6,8 @@ function Dropdown({
   options,
   value,
   onChange,
+  required,
+  ariaInvalid,
   placeholder = "Select an option",
 }) {
   const [open, setOpen] = useState(false);
@@ -35,6 +37,8 @@ function Dropdown({
         aria-haspopup="listbox"
         aria-expanded={open}
         name={name}
+        aria-invalid={ariaInvalid}
+        aria-required={required ? "true" : "false"}
       >
         <span>
           {selected

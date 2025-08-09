@@ -2,18 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import "./style.scss";
 
 /**
- * DatePicker - Composant de sélection de date custom
+ * DatePicker - Composant de sélection de date
  *
  * Props :
  * @param {string} name - Nom du champ (pour le formulaire)
  * @param {string} value - Valeur ISO de la date sélectionnée (ex: "2025-08-06")
- * @param {function} onChange - Fonction appelée lors de la sélection d'une date (event-like)
+ * @param {function} onChange - Fonction appelée lors de la sélection d'une date
  * @param {string} [placeholder] - Texte affiché si aucune date sélectionnée
  */
-function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
-  // Etat d'ouverture du calendrier
+function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder = "Select a date" }) {
   const [open, setOpen] = useState(false);
-  // Référence pour gérer le clic en dehors
   const ref = useRef(null);
 
   // Ferme le calendrier si on clique en dehors du composant
@@ -25,7 +23,7 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Date affichée dans le calendrier (initialisée à la valeur ou à aujourd'hui)
+  // Date affichée dans le calendrier
   const [currentDate, setCurrentDate] = useState(() =>
     value ? new Date(value) : new Date()
   );
@@ -36,11 +34,8 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
 
-  /**
-   * Génère une date locale
-   * @param {Date} date
-   * @returns {string} - Format "YYYY-MM-DD"
-   */
+
+  // Génère une date locale
   const localeDate = (date) =>
     date.getFullYear() +
     "-" +
@@ -48,10 +43,7 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
     "-" +
     String(date.getDate()).padStart(2, "0");
 
-  /**
-   * Sélectionne un jour et ferme le calendrier
-   * @param {number} day
-   */
+  // Sélectionne un jour et ferme le calendrier
   const handleDate = (day) => {
     const selected = new Date(year, month, day);
     onChange({ target: { name, value: localeDate(selected) } });
@@ -77,6 +69,8 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
         type="button"
         className="custom-datepicker__toggle"
         onClick={() => setOpen((o) => !o)}
+        aria-invalid={ariaInvalid}
+        aria-required={required ? "true" : "false"}
       >
         <span>
           {value ? new Date(value).toLocaleDateString("fr-FR") : placeholder}
@@ -103,7 +97,6 @@ function DatePicker({ name, value, onChange, placeholder = "Select a date" }) {
               ))}
             </select>
               {/* Affichage du mois et select de l'année */}
-              {/* {currentDate.toLocaleString("fr-FR", { month: "long" })} */}
               <select
                 className="custom-datepicker__year-select"
                 value={year}

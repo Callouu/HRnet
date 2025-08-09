@@ -114,3 +114,7 @@
     background: #f5faff;
   }
 }
+
+.custom-datepicker__toggle[aria-invalid="true"] {
+  border-color: #dc3545;
+}

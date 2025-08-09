@@ -52,3 +52,7 @@
     }
   }
 }
+
+.dropdown__toggle[aria-invalid="true"] {
+  border-color: #dc3545;
+}
