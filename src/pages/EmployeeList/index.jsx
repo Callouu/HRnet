@@ -27,8 +27,11 @@ function EmployeeList() {
     if (!dateStr) return "";
     const date = new Date(dateStr);
     if (isNaN(date)) return dateStr;
-    return date.toLocaleDateString("fr-FR").slice(0, 8);
-  };
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear());
+    return `${day}/${month}/${year}`;
+  }
 
   // Columns definition for DataTable
   const columns = [
