@@ -28,6 +28,8 @@ function Dropdown({
   onChange,
   required,
   ariaInvalid,
+  id,
+  ariaLabelledby,
   placeholder = "Select an option",
 }) {
   const [open, setOpen] = useState(false);
@@ -51,6 +53,8 @@ function Dropdown({
   return (
     <div className="dropdown" ref={ref}>
       <button
+        id={id}
+        aria-labelledby={ariaLabelledby}
         type="button"
         className="dropdown__toggle"
         onClick={() => setOpen((o) => !o)}

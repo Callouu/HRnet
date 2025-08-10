@@ -19,7 +19,7 @@ import "./style.scss";
  * @component
  * @returns {React.Component} A React component of a datepicker.
  */
-function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder = "Select a date" }) {
+function DatePicker({ name, value, onChange, required, ariaInvalid, id, ariaLabelledby, placeholder = "Select a date" }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -76,6 +76,8 @@ function DatePicker({ name, value, onChange, required, ariaInvalid, placeholder 
       {/* Open Calendar */}
       <button
         type="button"
+        id={id}
+        aria-labelledby={ariaLabelledby}
         className="custom-datepicker__toggle"
         onClick={() => setOpen((o) => !o)}
         aria-invalid={ariaInvalid}

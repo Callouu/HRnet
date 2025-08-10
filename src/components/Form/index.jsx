@@ -209,8 +209,10 @@ function Form({ onSubmitSuccess }) {
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label">Date of Birth:*</label>
+        <label className="form__section__label" htmlFor="dateOfBirth" id="dateOfBirth-label">Date of Birth:*</label>
         <DatePicker
+          id="dateOfBirth"
+          aria-labelledby="dateOfBirth-label"
           name="dateOfBirth"
           value={formData.dateOfBirth}
           onChange={handleChange}
@@ -235,11 +237,13 @@ function Form({ onSubmitSuccess }) {
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label" htmlFor="startDate">
+        <label className="form__section__label" htmlFor="startDate" id="startDate-label">
           Start Date:*
         </label>
         <DatePicker
+          id="startDate"
           name="startDate"
+          ariaLabelledby="startDate-label"
           value={formData.startDate}
           onChange={handleChange}
           ariaInvalid={filled.startDate && errors.startDate ? "true" : "false"}
@@ -313,11 +317,12 @@ function Form({ onSubmitSuccess }) {
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label" htmlFor="state">
+        <label className="form__section__label" htmlFor="state" id="state-label">
           State:*
         </label>
         <Dropdown
           id="state"
+          ariaLabelledby="state-label"
           name="state"
           options={states.map((s) => ({
             label: s.name,
@@ -369,9 +374,10 @@ function Form({ onSubmitSuccess }) {
         )}
       </div>
       <div className="form__section">
-        <label className="form__section__label" htmlFor="department">Department:*</label>
+        <label className="form__section__label" htmlFor="department" id="department-label">Department:*</label>
         <Dropdown
           id="department"
+          ariaLabelledby="department-label"
           name="department"
           options={departments.map((s) => ({
             label: s.name,
