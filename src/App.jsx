@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter basename="/HRnet">
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/employee-list" element={<EmployeeList />} />
+        <Route path="/employee-list" element={<EmployeeList />} />
       </Routes>
     </BrowserRouter>
   );
