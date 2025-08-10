@@ -65,10 +65,13 @@ function EmployeeList() {
     <>
       <main className="employee_wrapper">
         <h1 className="employee_wrapper--title">Employee List</h1>
+        <label htmlFor="employee-search" className="sr-only">Search employees</label>
         <input
+          id="employee-search"
           type="text"
           placeholder="Search..."
           className="employee_wrapper--input"
+          aria-label="Search employees"
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
