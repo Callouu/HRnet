@@ -1,3 +1,6 @@
+global.TextEncoder = require('util').TextEncoder;
+global.TextDecoder = require('util').TextDecoder;
+
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -65,7 +68,7 @@ describe('EmployeeList Component', () => {
         </Provider>
       </BrowserRouter>
     );
-    expect(screen.getByText('15/01/20')).toBeInTheDocument();
-    expect(screen.getByText('10/05/85')).toBeInTheDocument();
+    expect(screen.getByText('15/01/2020')).toBeInTheDocument();
+    expect(screen.getByText('10/05/1985')).toBeInTheDocument();
   });
 });
