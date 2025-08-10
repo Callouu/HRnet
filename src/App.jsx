@@ -5,7 +5,7 @@ import EmployeeList from "./pages/EmployeeList";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/HRnet">
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/employee-list" element={<EmployeeList />} />
