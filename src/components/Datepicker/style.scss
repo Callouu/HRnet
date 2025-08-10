@@ -18,7 +18,7 @@
     transition: border-color 0.2s, background 0.2s;
 
     &:hover {
-      border-color: #007bff;
+      border-color: #4f2da8;
       background: #f5faff;
     }
   }
@@ -110,7 +110,7 @@
 
   &:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #4f2da8;
     background: #f5faff;
   }
 }
