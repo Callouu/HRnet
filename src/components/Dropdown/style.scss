@@ -5,7 +5,7 @@
 
   &:hover .dropdown__toggle {
     border-color: #4f2da8;
-    background: #f5faff;
+    background: #f9f5ff;
   }
 
   &__toggle {
@@ -47,8 +47,8 @@
 
     &:hover,
     &.selected {
-      background: #e6f0ff;
-      color: #007bff;
+      background: #f0e6ff;
+      color: #7700ff;
     }
   }
 }

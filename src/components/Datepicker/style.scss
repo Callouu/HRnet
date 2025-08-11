@@ -19,7 +19,7 @@
 
     &:hover {
       border-color: #4f2da8;
-      background: #f5faff;
+      background: #f9f5ff;
     }
   }
 
@@ -51,7 +51,7 @@
       border: none;
       font-size: 1.2rem;
       cursor: pointer;
-      color: #007bff;
+      color: #7700ff;
       padding: 0 0.5rem;
     }
   }
@@ -81,12 +81,12 @@
     transition: background 0.2s, color 0.2s;
 
     &:hover {
-      background: #e6f0ff;
-      color: #007bff;
+      background: #f0e6ff;
+      color: #7700ff;
     }
 
     &.selected {
-      background: #007bff;
+      background: #7700ff;
       color: #fff;
     }
 
