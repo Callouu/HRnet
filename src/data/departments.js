@@ -1,6 +1,10 @@
 const departments = [
   {
     label: 'department',
+    name: 'Sales',
+  },
+  {
+    label: 'department',
     name: 'Marketing',
   },
   {
